@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:travel_apps/constants.dart';
-import 'package:travel_apps/widgets/custom_animated_bottom_bar.dart';
+import 'package:travel_apps/models/Wisata.dart';
+
+import 'widget/heading_widget.dart';
+import 'widget/bottom_navigation_bar.dart';
+import 'widget/form_field_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,79 +16,70 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-  final _inactiveColor = Colors.grey;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kAccentColor,
-        body: getBody(),
-        bottomNavigationBar: _buildBottomBar());
-  }
-
-  Widget _buildBottomBar() {
-    return CustomAnimatedBottomBar(
-      containerHeight: 89,
-      backgroundColor: Colors.white,
-      selectedIndex: _currentIndex,
-      showElevation: false,
-      itemCornerRadius: 24,
-      curve: Curves.easeIn,
-      onItemSelected: (index) => setState(() => _currentIndex = index),
-      items: <BottomNavyBarItem>[
-        BottomNavyBarItem(
-          iconPath: 'assets/icons/eva_home-outline.svg',
-          title: Text('Home'),
-          activeColor: kPrimaryColor,
-          inactiveColor: Color(0xffAFB0CA),
-          textAlign: TextAlign.center,
+      backgroundColor: kAccentColor,
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 32),
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 14,
+              ),
+              HeadingWidget(),
+              SizedBox(
+                height: 33,
+              ),
+              FormFieldWidget(),
+              SizedBox(
+                height: 23,
+              ),
+              Expanded(child: Text("hello world")),
+            ],
+          ),
         ),
-        BottomNavyBarItem(
-          iconPath: 'assets/icons/eva_map-outline.svg',
-          title: Text('Destination'),
-          activeColor: kPrimaryColor,
-          inactiveColor: Color(0xffAFB0CA),
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          iconPath: 'assets/icons/eva_person-outline.svg',
-          title: Text('User'),
-          activeColor: kPrimaryColor,
-          inactiveColor: Color(0xffAFB0CA),
-          textAlign: TextAlign.center,
-        ),
-      ],
+      ),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
+}
 
-  Widget getBody() {
-    List<Widget> pages = [
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          "Home",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+class ImageItemWidget extends StatelessWidget {
+  const ImageItemWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 240,
+          height: 350,
+          margin: EdgeInsets.only(bottom: 18),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xff6D9CB1).withOpacity(0.4),
+                offset: Offset(0, 10),
+                blurRadius: 10,
+              )
+            ],
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+              image: AssetImage('assets/images/madrid.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          "Destination",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        Text(
+          'Madrid',
+          style: kTitleStyle,
         ),
-      ),
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          "Users",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ];
-    return IndexedStack(
-      index: _currentIndex,
-      children: pages,
+      ],
     );
   }
 }
