@@ -21,5 +21,5 @@ final TextStyle kTitleStyle = GoogleFonts.nunito(
 final TextStyle kBodyStyle = GoogleFonts.nunito(
   fontSize: 14,
   color: kBodyColor,
-  height: 21,
+  height: 2.1,
 );
