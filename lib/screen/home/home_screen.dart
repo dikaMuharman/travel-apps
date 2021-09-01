@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:travel_apps/constants.dart';
 import 'package:travel_apps/models/Wisata.dart';
+import 'package:travel_apps/widgets/custom_icon_button.dart';
 
 import 'widget/heading_widget.dart';
 import 'widget/bottom_navigation_bar.dart';
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: kAccentColor,
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          margin: EdgeInsets.symmetric(horizontal: 32),
           child: ListView(
             children: [
               SizedBox(
@@ -36,50 +36,63 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 23,
               ),
-              Expanded(child: Text("hello world")),
+              Expanded(
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff6D9CB1).withOpacity(.4),
+                            offset: Offset(0, 10),
+                            blurRadius: 20,
+                          )
+                        ],
+                        color: Colors.black.withOpacity(0.1),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.asset(
+                          "assets/images/madrid.jpg",
+                          height: 430,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 15,
+                      left: 70,
+                      child: Text(
+                        'Madrid',
+                        style: kTitleStyle.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 9,
+                      left: 14,
+                      width: 44,
+                      height: 44,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: SvgPicture.asset(
+                            'assets/icons/cil_location-pin.svg'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(),
-    );
-  }
-}
-
-class ImageItemWidget extends StatelessWidget {
-  const ImageItemWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 240,
-          height: 350,
-          margin: EdgeInsets.only(bottom: 18),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xff6D9CB1).withOpacity(0.4),
-                offset: Offset(0, 10),
-                blurRadius: 10,
-              )
-            ],
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              image: AssetImage('assets/images/madrid.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Text(
-          'Madrid',
-          style: kTitleStyle,
-        ),
-      ],
     );
   }
 }
